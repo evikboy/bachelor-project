@@ -1,0 +1,89 @@
+.root {
+    background-color: rgb(39, 39, 39);
+    padding: 25px 30px;
+    box-shadow: rgba(0, 0, 0, 0.15) 2px 1px 5px;
+    border-radius: 5px;
+    gap: 15px;
+    margin-bottom: 20px;
+
+    h3 {
+        margin-bottom: 0;
+    }
+
+    .vertical {
+        margin-left: auto;
+    }
+
+    .vertical::before {
+        font-size: 20px;
+    }
+    
+    ul {
+        white-space: nowrap;
+    }
+    
+    ul > a:not(:first-child) {
+        margin-left: 20px;
+    }
+
+    ul a {
+        background-color: rgb(54,54,54);
+        padding: 1px 0.7em;
+        font-weight: 500;
+        font-size: 12px;
+        border-radius: 4px;
+        letter-spacing: 0.05em;
+    }
+
+    li:before {
+        display: inline-block;
+        font-size: 12px;
+        padding-right: 5px;
+    }
+
+    .btn-vote {
+        background-color: rgb(54,54,54);
+        padding: 0 10px;
+    }
+
+    .btn-vote.up {
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+
+        span {
+            top: 2px;
+        }
+    }
+
+    .btn-vote.down {
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+    }
+
+    .btn-vote::before {
+        font-size: 16px;
+    }
+
+    .btn-vote.up::before {
+        color: #009cff;
+    }
+
+    .btn-simple {
+        background-color: transparent;
+        color: #009cff;
+        line-height: 30px;
+    }
+
+    .btn-simple::before {
+        font-size: 12px;
+    }
+}
+
+.answer {
+    border-left: 5px solid rgb(34, 142, 93);
+}
+
+.comment {
+    border-left: 10px solid #009cff;
+}
+

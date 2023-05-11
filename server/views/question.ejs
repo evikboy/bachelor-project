@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="/images/logo.svg"/>
+    <link rel="stylesheet" href="/css/iconsfont.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <title><%= question.title %></title>
+</head>
+<body>
+    <div class="wrapper">
+
+        <div class="container">
+            <%- include('inc/sidebar_layout') -%>
+            <div class="page__content">
+                <%- include('inc/header_layout') -%>
+                <div class="page__main">
+                    <div class="page__main__container">
+
+                        <% for (let i = 0; i < 1; i++) { %>
+                            <div class="post__full">
+                                <div class="post__head">
+                                    <div class="post__avatar">
+                                        <img src="/images/ds.jpg" class="avatar" alt="">
+                                    </div>
+                                    <div class="post__info">
+                                        <p class="post__info__authorName">@Golanginya</p>
+                                        <p class="post__info__dateCreated">12 November 2020 19:35</p>
+                                    </div>
+                                    <div class="post__more-vertical">
+                                        <span class="icon-ellipsis-vertical"></span>
+                                    </div>
+                                </div>
+                                <h3 class="post_title"><%= question.title %></h3>
+                                <div class="post__body"><%= question.body %></div>
+                                <div class="post__submenu">
+                                    <ul class="post__submenu__tagList">
+                                        <li>java</li>
+                                        <li>javascript</li>
+                                        <li>wtf</li>
+                                    </ul>
+                                    <div class="vote__buttons">
+                                        <button class="vote__button up button icon-up"><span>Голос · 1.6K</span></button>
+                                        <button class="vote__button down button icon-down"></button>
+                                    </div>
+                                    
+
+                                </div>
+                            </div>
+                        <% } %>
+
+                        <h3 class="answers-h3">Відповіді</h3>
+                        <div class="suggest_block">
+                            <input class="textCtrl">
+                            <div class="suggest_submenu">
+                                <button class="button cancel__button">Відмінити</button>
+                                <button class="button def__button icon-message">Відправити</button>
+                            </div>
+                        </div>
+                        <div class="post__full suggest-type">
+                            <div class="post__head">
+                                <div class="post__avatar">
+                                    <img src="/images/ds.jpg" class="avatar" alt="">
+                                </div>
+                                <div class="post__info">
+                                    <p class="post__info__authorName">@Golanginya</p>
+                                    <p class="post__info__dateCreated">12 November 2020 19:35</p>
+                                </div>
+                                <div class="post__more-vertical">
+                                    <span class="icon-ellipsis-vertical"></span>
+                                </div>
+                            </div>
+                            <div class="post__body">
+                                <p>Mi magna sed nec nisl mattis. Magna cursus tincidunt rhoncus imperdiet fermentum pretium, pharetra nisl. Euismod.</p>
+                                <p>Posuere arcu arcu consectetur turpis rhoncus tellus. Massa, consectetur massa sit fames nulla eu vehicula ullamcorper. Ante sit mauris elementum sollicitudin arcu sit suspendisse pretium. Nisl egestas fringilla justo bibendum.</p>
+                            </div>
+                            <hr class="break-hr"/>
+                            <div class="post__submenu">
+                                <div class="vote__buttons">
+                                    <button class="vote__button up button icon-up"><span>15</span></button>
+                                    <button class="vote__button down button icon-down"></button>
+                                </div>
+                                <div class="">
+                                    <button class="show-replies-btn post_manage_button icon-chevrons-up true" href="#">Показати всі відповіді (2)</button>
+                                    <button class="post_manage_button icon-arrow-turn-down-right" href="#">Відповісти</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="replies">
+                            <div class="post__full suggest-reply-type">
+                                <div class="post__body">
+                                    <p><a class="tag_user" href="#">@Golanginya</a>, Mi magna sed nec nisl mattis. Magna cursus tincidunt rhoncus imperdiet fermentum pretium, pharetra nisl. Euismod.</p>
+                                </div>
+                                <hr class="break-hr"/>
+                                <div class="post__submenu">
+                                    <div class="">
+                                        <p>Написав <a class="post__info__authorName" href="#">Yaroslav</a></p>
+                                    </div>
+                                    <div class="">
+                                        <a class="post_manage_button icon-arrow-turn-down-right" href="#">Відповісти</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post__full suggest-reply-type">
+                                <div class="post__body">
+                                    <p><a class="tag_user" href="#">@Golanginya</a>, Mi magna sed nec nisl mattis. Magna cursus tincidunt rhoncus imperdiet fermentum pretium, pharetra nisl. Euismod.</p>
+                                </div>
+                                <hr class="break-hr"/>
+                                <div class="post__submenu">
+                                    <div class="">
+                                        <p>Написав <a class="post__info__authorName" href="#">Yaroslav</a></p>
+                                    </div>
+                                    <div class="">
+                                        <a class="post_manage_button icon-arrow-turn-down-right" href="#">Відповісти</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+
+                    
+                    <div class="secondary-content">
+                        Hello
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+    <script src="/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+.root {
+    background-color: rgb(39, 39, 39);
+    height: 70px;
+    border-top: 3px solid rgb(34, 142, 93);
+    box-shadow: 0 5px 5px -5px #000;
+    padding: 0 60px;
+
+
+    .logo {
+        font-size: 18px;
+        letter-spacing: 0.10em;
+        
+        span {
+            font-weight: 600;
+        }
+    }
+
+    .avatar {
+        height: 40px;
+        width: 40px;
+    }
+
+    .svg-icon {
+        display: flex;
+        font-size: 17px;
+        color: rgb(148, 148, 148);
+        padding: 15px 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .svg-icon:hover {
+        background-color: rgb(48, 48, 48);
+        color: rgb(34, 142, 93);
+    }
+
+    .btn-reg {
+        background-color: transparent !important;
+        color: rgb(214, 214, 214) !important;
+        padding: 0px !important;
+    }
+    
+    .quickSearchField {
+        padding-left: 35px !important;
+        border: none;
+        width: 200px;
+        margin-right: 30px;
+    }
+    
+    form span::before {
+        color:rgb(34, 142, 93);
+        font-size: 16px;
+        position: relative;
+        left: 25px;
+        font-weight: bold;
+    }
+
+    .dropdown-container {
+
+        .avatar-toggle {
+            background-color: transparent;
+            border: none;
+            padding: 0;
+        }
+
+        .avatar-toggle:focus {
+            background-color: transparent;
+            border: none;
+        }
+
+        .avatar-dropdown-menu {
+            padding: 8px 0;
+            border-radius: 5px;
+            min-width: 200px;
+            margin-top: 20px;
+            background-color: rgb(39, 39, 39);
+            border: 1px solid rgb(70, 70, 70);
+           
+        }
+
+        .avatar-dropdown-menu a {
+            color: rgb(214, 214, 214);
+            padding: 7px 15px;
+            font-weight: 500;
+        }
+
+        .avatar-dropdown-menu a:hover {
+            background: rgb(54, 54, 54);
+        }
+
+        hr {
+            color: rgb(70, 70, 70);
+            margin: 5px 0;
+        }
+    }
+}
+
+

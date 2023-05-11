@@ -1,0 +1,102 @@
+
+
+@font-face {
+    font-family: Roboto;
+    src: url("../public/fonts/Roboto-Regular.ttf");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Roboto;
+    src: url("../public/fonts/Roboto-Medium.ttf");
+    font-weight: 500;
+    font-style: normal;
+}
+
+* {
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+    box-sizing: border-box;
+}
+
+html, body {
+	font-size: 13px;
+	height: 100%;
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Roboto';
+	background-color: rgb(48, 48, 48);
+	color: rgb(214, 214, 214);
+}
+
+#root {
+    height: 100%;
+}
+
+body::-webkit-scrollbar {
+    width: 0.6em;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    border-radius: 6px;
+}
+
+a {
+    color: rgb(214, 214, 214);
+    text-decoration: none;
+}
+
+ul, ol, li {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+h1, h2, h3, h4 {
+    margin: 0;
+    padding: 0;
+}
+
+h3 {
+    font-size: 17px;
+}
+
+hr {
+    margin: 0;
+}
+
+a:hover {
+	color: inherit;
+}
+
+input, button, textarea {
+	color: rgb(214, 214, 214);
+    font-size: 13px;
+    letter-spacing: 0.05em;
+}
+
+.btn-default {
+	padding: 0px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    line-height: 30px;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    color: #fff;
+	background-color: rgb(34, 142, 93);
+}
+
+.textCtrl {
+    background-color: rgb(45, 45, 45);
+    padding: 0px 10px;
+    outline: none;
+    line-height: 30px;
+    border-radius: 6px;
+}
+
+.textCtrl:focus {
+    outline: rgb(30, 90, 63) solid 0.2em;
+}

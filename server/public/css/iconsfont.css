@@ -1,0 +1,109 @@
+@font-face {
+  font-family: 'icons';
+  src:  url('../iconfonts/icons.eot?xacjnp');
+  src:  url('../iconfonts/icons.eot?xacjnp#iefix') format('embedded-opentype'),
+    url('../iconfonts/icons.ttf?xacjnp') format('truetype'),
+    url('../iconfonts/icons.woff?xacjnp') format('woff'),
+    url('../iconfonts/icons.svg?xacjnp#icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"]::before, [class*=" icon-"]::before {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icons' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin-right: 5px;
+}
+
+.icon-down:before {
+  content: "\e915";
+  margin-right: 0;
+  font-size: 18px;
+}
+.icon-up:before {
+  content: "\e916";
+  font-size: 18px;
+  color: #1682FD;
+}
+.icon-triangle-exclamation:before {
+  content: "\e914";
+}
+.icon-list:before {
+  content: "\e913";
+}
+.icon-award-simple:before {
+  content: "\e90d";
+}
+.icon-circle-question:before {
+  content: "\e90e";
+}
+.icon-comment:before {
+  content: "\e90f";
+}
+.icon-heart:before {
+  content: "\e910";
+}
+.icon-house:before {
+  content: "\e911";
+}
+.icon-tags:before {
+  content: "\e912";
+}
+.icon-chevrons-up:before {
+  content: "\e909";
+}
+.icon-thumbs-down:before {
+  content: "\e90a";
+}
+.icon-thumbs-up:before {
+  content: "\e90b";
+}
+.icon-arrow-turn-down-right:before {
+  content: "\e90c";
+}
+.icon-arrow-up:before {
+  content: "\e901";
+}
+.icon-arrow-up-bold:before {
+  content: "\e901";
+  font-weight: 600;
+  font-size: 11px;
+}
+.icon-arrow-up-right:before {
+  content: "\e902";
+}
+.icon-clock:before {
+  content: "\e903";
+}
+.icon-eye:before {
+  content: "\e904";
+}
+.icon-grid:before {
+  content: "\e905";
+}
+.icon-magnifying-glass1:before {
+  content: "\e906";
+}
+.icon-message:before {
+  content: "\e907";
+}
+.icon-ellipsis-vertical:before {
+  content: "\e908";
+  font-size: 20px;
+}
+.icon-magnifying-glass:before {
+  content: "\e900";
+  font-weight: bold;
+}
+

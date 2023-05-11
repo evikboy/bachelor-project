@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" type="image/png" href="/images/logo.svg"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/iconsfont.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>TrimHelp</title>
+</head>
+<body>
+    <div class="wrapper">
+
+        <div class="container">
+            <%- include('inc/sidebar_layout') -%>
+            <div class="page__content">
+                <%- include('inc/header_layout') -%>
+                <div class="page__main">
+                    <div class="page__main__container">
+                        <div class="posts__tab">
+                            <ul>
+                                <li><a class="icon-clock active" href="#">Нові</a></li>
+                                <li><a class="icon-arrow-up-right" href="#">Топ</a></li>
+                                <li><a class="icon-grid" href="#">Категорії</a></li>
+                            </ul>
+                            <button onclick="window.location.href='/create-question'" class="def__button button">Задати питання</button>
+                        </div>
+                        <% questions.forEach(item => { %>
+                            <div class="post__full">
+                                <div class="post__head">
+                                    <div class="post__avatar">
+                                        <a href="#"><img src="/images/ds.jpg" class="avatar" alt=""></a>
+                                    </div>
+                                    <div class="post__info">
+                                        <a class="post__info__authorName" href="#">@Golanginya</a>
+                                        <p class="post__info__dateCreated"><%= item.createdAt %></p>
+                                    </div>
+                                    <div class="post__more-vertical">
+                                        <span class="icon-ellipsis-vertical"></span>
+                                    </div>
+                                </div>
+                                <h3 class="post_title"><a href="/questions/<%= item.slug %>"><%= item.title %></a></h3>
+                                <div class="post__body">
+                                    <%= item.body %>
+                                </div>
+                                <div class="post__submenu">
+                                    <ul class="post__submenu__tagList">
+                                        <li>java</li>
+                                        <li>javascript</li>
+                                        <li>wtf</li>
+                                    </ul>
+                                    <ul class="post__submenu__activity">
+                                        <li><span class="icon-eye"></span><%= item.views %></li>
+                                        <li><span class="icon-message"></span>15</li>
+                                        <li><span class="icon-arrow-up"></span><%= item.upvotes %></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+
+                    <div class="secondary-content">
+                        Hello
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
