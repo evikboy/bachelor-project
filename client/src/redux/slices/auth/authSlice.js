@@ -11,6 +11,9 @@ const initialState = {
 export const registerUser = createAsyncThunk('auth/registerUser', async(params, { rejectWithValue }) => { 
     try {
         const { data } = await axios.post('/user/register', params)
+        if (data.token) {
+            window.localStorage.setItem('token', data.token)
+        }
         return data
     } catch (err) {
         return rejectWithValue(err.response.data)
@@ -20,6 +23,9 @@ export const registerUser = createAsyncThunk('auth/registerUser', async(params, 
 export const loginUser = createAsyncThunk('auth/loginUser', async(params, { rejectWithValue }) => { 
     try {
         const { data } = await axios.post('/user/login', params)
+        if (data.token) {
+            window.localStorage.setItem('token', data.token)
+        }
         return data
     } catch (err) {
         return rejectWithValue(err.response.data)
@@ -43,6 +49,9 @@ export const authSlice = createSlice({
             state.user = null
             state.token =  null
             state.isLoading = false
+            state.error = null
+        },
+        clearError: (state) => {
             state.error = null
         }
     },
@@ -90,7 +99,8 @@ export const authSlice = createSlice({
     }
 })
 
-export const checkIsAuth = state => Boolean(state.auth.token)
+export const checkIsAuth = (state) => Boolean(state.auth.token)
 
+export const { clearError } = authSlice.actions
 export const { logout } = authSlice.actions
 export default authSlice.reducer

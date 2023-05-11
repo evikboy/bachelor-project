@@ -12,6 +12,7 @@ export const Header = () => {
 
     const logoutHandler = () => {
         dispatch(logout())
+        window.localStorage.removeItem('token')
     }
 
     return (

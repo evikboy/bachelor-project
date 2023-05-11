@@ -1,14 +1,22 @@
-import React from "react"
-import { Link } from "react-router-dom"
+import React, { useEffect } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { useForm } from "react-hook-form"
-import { loginUser } from "../../redux/slices/auth/authSlice"
+import { checkIsAuth, loginUser, clearError } from "../../redux/slices/auth/authSlice"
+
 import styles from "./LoginPage.module.scss"
 
 export const LoginPage = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const { error } = useSelector((state) => state.auth)
+    const isAuth = useSelector(checkIsAuth)
 
+    useEffect(() => {
+        dispatch(clearError())
+        if (isAuth) navigate('/')
+    }, [isAuth, navigate, dispatch])
+    
     const {
         register,
         formState: {
@@ -19,13 +27,9 @@ export const LoginPage = () => {
     } = useForm()
 
     const onSubmit = (values) => {
-        const data = dispatch(loginUser(values))
+        dispatch(loginUser(values))
 
-        if ('token' in data.payload) {
-            window.localStorage.setItem('token', data.payload.token);
-        }
-
-        if (!data.payload.error) reset({ password: '' })
+        error && reset({ password: '' })
     }
 
     return (
@@ -60,7 +64,7 @@ export const LoginPage = () => {
 
             <button type="submit" className="btn-default">Вхід</button>
 
-            {error && <div className={styles.error}>{ error }</div>}
+            {error && <div className={styles.error}>{ error }</div>} 
             
             <Link to={'/register'} className={`${styles["login-form__btn-reg"]} m-auto`} >
                 Реєстрація

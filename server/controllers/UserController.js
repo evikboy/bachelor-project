@@ -64,8 +64,15 @@ const getMe = errorWrapper(async (req, res) => {
 
     if (!user) errorGenerator({ statusCode: 404, message: "Користувач не знайдений"})
 
+    const token = jwt.sign(
+        { userId: user._id, username: user.username, email: user.email }, 
+        secret,
+        { expiresIn: expiresIn }
+    )
+
     return res.status(200).json({
-        user: user
+        user: user,
+        token: token
     })
 })
 

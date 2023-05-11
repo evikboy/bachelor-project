@@ -1,12 +1,21 @@
-import React from "react"
+import React, { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { useForm } from "react-hook-form"
-import { registerUser } from "../../redux/slices/auth/authSlice"
+import { checkIsAuth, registerUser, clearError } from "../../redux/slices/auth/authSlice"
+
 import styles from "./RegisterPage.module.scss"
 
 export const RegisterPage = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const { error } = useSelector((state) => state.auth)
+    const isAuth = useSelector(checkIsAuth)
+
+    useEffect(() => {
+        dispatch(clearError())
+        if (isAuth) navigate('/')
+    }, [isAuth, navigate, dispatch])
 
     const {
         register,
@@ -18,9 +27,9 @@ export const RegisterPage = () => {
     } = useForm()
 
     const onSubmit = (values) => {
-        const data = dispatch(registerUser(values))
+        dispatch(registerUser(values))
 
-        if (!data.payload.error) reset({ password: '' })
+        error && reset({ password: '' })
     }
 
     return (
