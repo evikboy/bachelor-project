@@ -14,10 +14,6 @@
         margin-left: auto;
     }
 
-    .vertical::before {
-        font-size: 20px;
-    }
-    
     ul {
         white-space: nowrap;
     }
@@ -60,22 +56,10 @@
         border-top-left-radius: 0;
     }
 
-    .btn-vote::before {
-        font-size: 16px;
-    }
-
-    .btn-vote.up::before {
-        color: #009cff;
-    }
-
     .btn-simple {
         background-color: transparent;
         color: #009cff;
-        line-height: 30px;
-    }
-
-    .btn-simple::before {
-        font-size: 12px;
+        height: 30px;
     }
 }
 

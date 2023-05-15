@@ -24,9 +24,17 @@ const questionSchema = new mongoose.Schema({
         default: Date.now,
     },
     user: {
-        ref: 'users',
         type: mongoose.Schema.Types.ObjectId,
-    }
+        ref: 'users'
+    },
+    views: {
+        type: Number,
+        default: 0
+    },
+    answers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'answers'
+    }]
 })
 
 questionSchema.plugin(mongooseSlugPlugin, { tmpl: '<%=title%>' })
@@ -42,8 +50,8 @@ questionSchema.virtual('formattedUpdatedAt').get(function () {
 questionSchema.set('toJSON', { 
     virtuals: true,
     transform: (doc , ret) => {
-        delete ret.createdAt
-        delete ret.updatedAt
+        // delete ret.createdAt
+        // delete ret.updatedAt
         delete ret._id
     } 
 })

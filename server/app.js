@@ -7,6 +7,7 @@ const cors = require('cors')
 const { errorHandler } = require('./middleware')
 const passport = require('passport')
 const routes = require('./routes')
+
 const app = express()
 
 app.set('view engine', 'ejs')

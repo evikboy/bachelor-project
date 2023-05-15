@@ -11,6 +11,11 @@
             line-height: 40px;
             letter-spacing: 0.05em;
         }
+
+        svg {
+            position: relative;
+            top: 3px;
+        }
     
         a:hover {
             transition: all 0.3s, border 0s;

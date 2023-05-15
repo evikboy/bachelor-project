@@ -23,10 +23,11 @@ function App() {
 	return (
 		<Routes>
 			<Route path='/' element={<Layout><MainPage /></Layout>} />
-			<Route path='/questions' element={<Layout><QuestionPage /></Layout>} />
+			<Route path='/questions/:questionId' element={<Layout><QuestionPage /></Layout>} />
 			<Route path='/ask' element={<Layout><AddQuestionPage /></Layout>} />
-			<Route path='/register' element={<Layout isAuthPage={true}><RegisterPage /></Layout>} />
-			<Route path='/login' element={<Layout isAuthPage={true}><LoginPage /></Layout>} />
+			<Route path='/ask/mom' element={<Layout><AddQuestionPage /></Layout>} />
+			<Route path='/register' element={<Layout isAuthPage><RegisterPage /></Layout>} />
+			<Route path='/login' element={<Layout isAuthPage><LoginPage /></Layout>} />
 		</Routes>
 	)
 }

@@ -24,7 +24,10 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-
+  
+  .icon-paper-plane:before {
+    content: "\e91a";
+  }
   .icon-circle-exclamation:before {
     content: "\e919";
   }

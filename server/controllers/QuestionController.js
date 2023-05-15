@@ -2,17 +2,17 @@ const { Question } = require('../models')
 const { errorWrapper, errorGenerator } = require('../errors')
 
 const getAll = errorWrapper(async (req, res) => {
-    const questions = await Question.find()
+    const questions = await Question.find().populate('user', 'username avatarUrl')
 
     if (!questions) errorGenerator(404, 'Questions not found')
 
-    res.status(200).json(questions)
+    res.status(200).json({questions})
 })
 
 const getById = errorWrapper(async (req, res) => {
-    const _id = req.params.id
+    const _id = req.params.questionId
 
-    const question = await Question.findById({ _id })
+    const question = await Question.findById({ _id }).populate('user', 'username avatarUrl')
     
     if (!question) errorGenerator({ statusCode: 404, message: 'Question not found'})
 
@@ -22,7 +22,6 @@ const getById = errorWrapper(async (req, res) => {
 const create = errorWrapper(async (req, res) => {
     const { title, body } = req.body
     const userId = req.user.id
-    console.log(req.user)
 
     const question = new Question({
         title, body,
@@ -34,7 +33,7 @@ const create = errorWrapper(async (req, res) => {
 })
 
 const remove = errorWrapper(async (req, res) => {
-    const _id = req.params.id
+    const _id = req.params.questionId
 
     const deletedQuestion = await Question.findOneAndDelete({ _id })
 
@@ -44,7 +43,7 @@ const remove = errorWrapper(async (req, res) => {
 })
 
 const update = errorWrapper(async (req, res) => {
-    const _id = req.params.id
+    const _id = req.params.questionId
     const { title, body } = req.body
 
     const updatedQuestion = await Question.findOneAndUpdate({ _id },

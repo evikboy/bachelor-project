@@ -1,11 +1,21 @@
-import React from "react"
+import React from 'react'
 
-export const ActivityItems = ({ children }) => {
+import { HiOutlineEye } from 'react-icons/hi'
+import { FaRegComment }  from 'react-icons/fa'
+import { AiOutlineArrowUp } from 'react-icons/ai'
+
+export const ActivityItems = ({ views, answersCount }) => {
     return (
-        <ul className="d-flex align-items-center gap-4">
-            <li className="icon-eye">15</li>
-            <li className="icon-comment">101</li>
-            <li className="icon-arrow-up">14</li>
+        <ul className='d-flex align-items-center gap-4'>
+            <li className='d-flex align-items-center gap-2'>
+                <HiOutlineEye/>{views}
+            </li>
+            <li className='d-flex align-items-center gap-2'>
+                <FaRegComment/>{answersCount}
+            </li>
+            <li className='d-flex align-items-center gap-2'>
+                <AiOutlineArrowUp/>14
+            </li>
         </ul>
     )
 }
