@@ -1,11 +1,13 @@
 const QuestionController = require('./QuestionController')
 const AnswerController = require('./AnswerController')
 const CommentController = require('./CommentController')
+const TagController = require('./TagController')
 const UserController = require('./UserController')
 
 module.exports = {
     QuestionController,
     AnswerController,
     CommentController,
+    TagController,
     UserController
 }

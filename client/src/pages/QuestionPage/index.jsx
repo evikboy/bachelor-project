@@ -2,9 +2,11 @@ import React, { useEffect, useState, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { fetchAnswers, createAnswer } from '../../redux/slices/answer/answerSlice'
+import { fetchTags } from '../../redux/slices/tag/tagSlice'
 import { checkIsAuth } from '../../redux/slices/auth/authSlice'
 import { Post } from '../../components/Post'
 import axios from '../../utils/axios'
+import { TextEditor } from '../../components/TextEditor'
 
 import { BiMessage } from 'react-icons/bi'
 
@@ -16,6 +18,7 @@ export const QuestionPage = () => {
     const { questionId } = useParams()
     const [question, setQuestion] = useState()
     const { answers } = useSelector((state) => state.answer)
+    const { tags } = useSelector((state) => state.tag)
     const [commentsMap, setCommentsMap] = useState({})
 
     const [answerInput, setAnswerInput] = useState('')
@@ -33,6 +36,10 @@ export const QuestionPage = () => {
         dispatch(fetchAnswers(questionId))
     }, [dispatch, questionId])
 
+    useEffect(() => {
+        dispatch(fetchTags({questionId}))
+    }, [dispatch, questionId])
+
     const cancelAnswer = () => {
         setAnswerInput('')
     }
@@ -40,6 +47,10 @@ export const QuestionPage = () => {
     const submitAnswer = () => {
         dispatch(createAnswer({ questionId, body: answerInput }))
         setAnswerInput('')
+    }
+
+    const handleAnswer = (value) => {
+        setAnswerInput(value)
     }
 
     if (!question) {
@@ -61,18 +72,19 @@ export const QuestionPage = () => {
                 user={question.user}
                 createdAt={question.createdAt}
                 views={question.views}
+                tags={tags}
             />
 
             <h3 style={{ letterSpacing: '0.05em', marginBottom: '20px' }} className={`text-center`}>Відповіді</h3>
 
             {isAuth && (
-                    <div className={`${styles.reply}`}>
-                        <input 
-                            className='textCtrl w-100'
+                    <div className={`${styles.reply} d-flex flex-column gap-4`}>
+
+                        <TextEditor
                             value={answerInput}
-                            onChange={(e) => setAnswerInput(e.target.value)}
-                            placeholder='Введіть тут свою мудру пропозицію'  
+                            onChange={handleAnswer}
                         />
+                        
                         <div className={`${styles.send_message} d-flex gap-3 justify-content-end`}>
                             <button 
                                 className={`btn-default ${styles['btn-cancel']}`}
@@ -118,6 +130,7 @@ export const QuestionPage = () => {
                     )}
                 </>
             ))
+            
             }
         </div>
     )

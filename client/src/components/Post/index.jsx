@@ -19,10 +19,12 @@ export const Post = ({
     user,
     createdAt,
     views,
+    tags,
     answersCount,
     commentsCount,
     answerUserName,
     commentsMap, setCommentsMap }) => {
+        console.log(tags)
     return (
         <div className={`${styles.root} ${isAnswer ? styles.answer : ''} ${isComment ? styles.comment : ''} d-flex flex-column mw-100`}>
             <div className='post__head d-flex align-items-center'>
@@ -39,14 +41,14 @@ export const Post = ({
                     <h3 style={{ marginBottom : '15px' }}><Link to={`questions/${id}`}>{title}</Link></h3> 
                 )}
                 {isComment && ( `@${answerUserName}, `) }
-                {body}
+                <div dangerouslySetInnerHTML={{ __html: body }}></div>
                 {(isAnswer || isComment) && ( <> <hr style={{ marginTop : '15px' }}></hr> </> )}
             </div>
 
 
             <div className='post__footer d-flex justify-content-between align-items-center'>
-                {isQuestionListItem && ( <> <TagList /> <ActivityItems views={views} answersCount={answersCount}/> </> )}
-                {isQuestion && ( <> <TagList /> <VoteButtons isQuestion /> </> )}
+                {isQuestionListItem && ( <> <TagList tags={tags} /> <ActivityItems views={views} answersCount={answersCount}/> </> )}
+                {isQuestion && ( <> <TagList tags={tags} /> <VoteButtons isQuestion /> </> )}
                 {isAnswer && ( <> <VoteButtons /> <AnswerButtons id={id} commentsCount={commentsCount} commentsMap={commentsMap} setCommentsMap={setCommentsMap} /> </> )}
                 {isComment && ( <> <div>від <Link>@{user.username}</Link></div> <CommentButtons /> </> )}
             </div>

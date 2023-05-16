@@ -1,47 +1,24 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from '../../utils/axios'
-import ReactQuill from 'react-quill'
-import 'react-quill/dist/quill.snow.css'
+import { TextEditor } from '../../components/TextEditor'
 
 import styles from './AddQuestionPage.module.scss'
-
-
-const modules = {
-    toolbar: [
-        [{ 'header': [1, 2, false] }],
-        ['bold', 'italic', 'underline','strike', 'blockquote'],
-        [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-        ['link', 'image'],
-        ['clean']
-    ],
-}
-const formats = [
-    'header',
-    'font',
-    'size',
-    'bold',
-    'italic',
-    'underline',
-    'strike',
-    'blockquote',
-    'list',
-    'bullet',
-    'indent',
-    'link',
-    'image',
-    'color',
-]
 
 export const AddQuestionPage = () => {
     const navigate = useNavigate()  
     const [title, setTitle] = useState('')
+    const [tags, setTags] = useState('')
     const [body, setBody] = useState('')
 
-
+    const handleBodyChange = (value) => {
+        setBody(value)
+    }
+    
     const submitQuestion = async () => {
-        const { data } = await axios.post('/questions', { title, body })
-        const { id } = data
+        const { data: createdQuestion } = await axios.post('/questions', { title, body })
+        const { id } = createdQuestion
+        await axios.post(`/questions/${id}/tags`, { name: tags })
         navigate(`/questions/${id}`)
     }
 
@@ -64,14 +41,12 @@ export const AddQuestionPage = () => {
                     </input>
                 </div>
 
-                <ReactQuill
-                    className='editor-text'
-                    theme='snow'
-                    modules={modules}
-                    formats={formats}
+
+                <TextEditor 
+                    editorHeight={300}
                     value={body}
-                    onChange={(value) => setBody(value)}
-                />
+                    onChange={handleBodyChange}
+                />   
 
                 <div className="tags__block">
                     <div className="label">
@@ -79,7 +54,13 @@ export const AddQuestionPage = () => {
                         <label style={{marginTop: '10px', color: 'rgb(148, 148, 148)'}}>Декілька тегів можуть бути розділені комами</label>
                     </div>
 
-                    <input style={{marginTop: '10px'}} className='textCtrl w-100'></input>
+                    <input style={{marginTop: '10px'}} 
+                        className='textCtrl w-100'
+                        value={tags}
+                        onChange={(e) => setTags(e.target.value)}
+                    >
+
+                    </input>
                 </div>
 
                 <button 

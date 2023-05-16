@@ -11,7 +11,7 @@ const questionSchema = new mongoose.Schema({
     body: {
         type: String,
         required: true,
-        maxlength: 5000,
+        maxlength: 20000,
     },
     createdAt: {
         type: Date,
@@ -34,6 +34,10 @@ const questionSchema = new mongoose.Schema({
     answers: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'answers'
+    }],
+    tags: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'tags'
     }]
 })
 

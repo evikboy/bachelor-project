@@ -59,10 +59,6 @@ h1, h2, h3, h4 {
     padding: 0;
 }
 
-h3 {
-    font-size: 17px;
-}
-
 hr {
     margin: 0;
 }
@@ -101,45 +97,4 @@ input, button, textarea {
     outline: rgb(30, 90, 63) solid 0.2em;
 }
 
-.editor {
-    height: 250px;
-    resize: none;
-    padding: 10px;
-}
 
-.editor-text {
-    display: flex;
-    flex-direction: column;
-
-    .ql-toolbar.ql-snow {
-        border: 1px solid rgb(45, 45, 45);
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-
-        button {
-            height: 27px;
-        }
-
-        .ql-stroke {
-            fill: none;
-            stroke: rgb(214, 214, 214);
-        }
-
-        .ql-fill {
-            fill: rgb(214, 214, 214);
-            stroke: none;
-        }
-
-        .ql-picker {
-            color: rgb(214, 214, 214);
-        }
-
-    }
-    .ql-container.ql-snow {
-        border: 1px solid rgb(45, 45, 45);
-        border-bottom-left-radius: 5px;
-        border-bottom-right-radius: 5px;
-        min-height: 300px;
-    }
-
-}

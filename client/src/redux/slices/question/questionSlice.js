@@ -46,7 +46,7 @@ const questionSlice = createSlice({
             })
             .addCase(fetchQuestions.rejected, (state, action) => {
                 state.isLoading = false
-                state.error = action.payload.message
+                state.error = action.error.message
             })
             .addCase(createQuestion.pending, (state) => {
                 state.isLoading = true
@@ -58,7 +58,7 @@ const questionSlice = createSlice({
             })
             .addCase(createQuestion.rejected, (state, action) => {
                 state.isLoading = false
-                state.error = action.payload.message
+                state.error = action.error.message
             })
     }
 })
