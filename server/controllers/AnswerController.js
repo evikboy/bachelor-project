@@ -1,11 +1,20 @@
-const { Answer, Question } = require('../models')
+const { Answer, Question, Vote } = require('../models')
 const { errorWrapper, errorGenerator } = require('../errors')
 
 const getByQuestionId = errorWrapper(async (req, res) => {
     const { questionId } = req.params
-    console.log(questionId)
+    const userId = req.user
+   
+    let query = Answer.find({ question: questionId }).populate('user comments', 'username avatarUrl')
 
-    const answers = await Answer.find({ question: questionId }).populate('user comments', 'username avatarUrl')
+    if (userId) {
+        query = query.populate({
+            path: 'votes',
+            match: { user: userId }
+        })
+    }
+
+    const answers = await query
 
     if (!answers) errorGenerator({ statusCode: 404, message: 'Відповіді не знайдено'})
 
@@ -23,6 +32,7 @@ const create = errorWrapper(async (req, res) => {
         user: userId
     })
     await answer.save()
+    await answer.populate('user', 'username avatarUrl')
 
     const question = await Question.findById(questionId)
 

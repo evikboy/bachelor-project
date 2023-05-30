@@ -61,12 +61,17 @@
         .avatar-toggle {
             background-color: transparent;
             border: none;
+            outline: none;
             padding: 0;
         }
 
-        .avatar-toggle:focus {
+        .avatar-toggle:focus,
+        .avatar-toggle:active,
+        .avatar-toggle:hover {
             background-color: transparent;
             border: none;
+            outline: none;
+            box-shadow: none;
         }
 
         .avatar-dropdown-menu {

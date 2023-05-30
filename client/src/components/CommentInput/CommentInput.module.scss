@@ -1,0 +1,17 @@
+.root {
+    background-color: rgb(39, 39, 39);
+    padding: 20px 30px;
+    box-shadow: rgba(0, 0, 0, 0.15) 2px 1px 5px;
+    border-radius: 5px;
+    margin: 0 0 20px 0;
+
+    .avatar {
+        width: 30px;
+        height: 30px;
+    }
+
+    textarea {
+        resize: none;
+        overflow: hidden;
+    }
+}

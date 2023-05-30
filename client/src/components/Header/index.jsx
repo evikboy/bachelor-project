@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import { Dropdown } from 'react-bootstrap'
 import { checkIsAuth, logout } from '../../redux/slices/auth/authSlice'
 
-import { AiOutlinePlusCircle } from 'react-icons/ai'
 import { FaSearch } from 'react-icons/fa'
 
 import styles from './Header.module.scss'
@@ -34,52 +33,42 @@ export const Header = () => {
                 </form>
 
                 {isAuth ? (
-                    <>
-                        <Link 
-                            to={'/ask'}>
-                                <button 
-                                    className='btn-default d-flex align-items-center gap-2'>
-                                        <AiOutlinePlusCircle/>Запитати
-                                </button>
-                        </Link>
+                    <Dropdown 
+                        align='end' 
+                        className={`${styles['dropdown-container']}`}>
+                            <Dropdown.Toggle 
+                                className={`${styles['avatar-toggle']} d-flex align-items-center gap-2`}>
+                                    <img src='/images/ds.jpg' className={`${styles.avatar} rounded-circle`} alt='avatar' />
+                            </Dropdown.Toggle>
 
-                        <Dropdown 
-                            align='end' 
-                            className={`${styles['dropdown-container']}`}>
-                                <Dropdown.Toggle 
-                                    className={`${styles['avatar-toggle']} d-flex align-items-center gap-2`}>
-                                        <img src='/images/ds.jpg' className={`${styles.avatar} rounded-circle`} alt='avatar' />
-                                </Dropdown.Toggle>
+                            <Dropdown.Menu 
+                                className={`${styles['avatar-dropdown-menu']}`}>
+                                    <Dropdown.Item>
+                                        Мій профіль
+                                    </Dropdown.Item>
 
-                                <Dropdown.Menu 
-                                    className={`${styles['avatar-dropdown-menu']}`}>
-                                        <Dropdown.Item>
-                                            Мій профіль
-                                        </Dropdown.Item>
+                                    <hr />
 
-                                        <hr />
+                                    <Dropdown.Item>
+                                        Мої питання
+                                    </Dropdown.Item>
 
-                                        <Dropdown.Item>
-                                            Мої питання
-                                        </Dropdown.Item>
+                                    <Dropdown.Item>
+                                        Мої відповіді
+                                    </Dropdown.Item>
 
-                                        <Dropdown.Item>
-                                            Мої відповіді
-                                        </Dropdown.Item>
+                                    <Dropdown.Item>
+                                        Мої голоси
+                                    </Dropdown.Item>
 
-                                        <Dropdown.Item>
-                                            Мої голоси
-                                        </Dropdown.Item>
+                                    <hr />
 
-                                        <hr />
-
-                                        <Dropdown.Item 
-                                            onClick={logoutHandler}>
-                                                Вийти
-                                        </Dropdown.Item>
-                                </Dropdown.Menu>
-                        </Dropdown>
-                    </>
+                                    <Dropdown.Item 
+                                        onClick={logoutHandler}>
+                                            Вийти
+                                    </Dropdown.Item>
+                            </Dropdown.Menu>
+                    </Dropdown>
                 ) :
                     <>
                         <Link 

@@ -21,9 +21,9 @@ export const fetchComments = createAsyncThunk(
 
 export const createComment = createAsyncThunk(
     'comments/createComment', 
-    async ({ answerId, body }, { rejectWithValue }) => {
+    async ({ parentId, parentType, body }, { rejectWithValue }) => {
         try {
-            const { data } = await axios.post(`/answers/${answerId}/comments`, { body })
+            const { data } = await axios.post(`/${parentType}s/${parentId}/comments`, { body })
             return data
         } catch (err) {
             return rejectWithValue(err.response.data)

@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import axios from '../../utils/axios'
+import { useSelector } from 'react-redux'
+import { useNavigate, Navigate } from 'react-router-dom'
+import { checkIsAuth } from '../../redux/slices/auth/authSlice'
 import { TextEditor } from '../../components/TextEditor'
-
+import axios from '../../utils/axios'
 import styles from './AddQuestionPage.module.scss'
 
 export const AddQuestionPage = () => {
     const navigate = useNavigate()  
+    const isAuth = useSelector(checkIsAuth)
+
     const [title, setTitle] = useState('')
     const [tags, setTags] = useState('')
     const [body, setBody] = useState('')
@@ -20,6 +23,10 @@ export const AddQuestionPage = () => {
         const { id } = createdQuestion
         await axios.post(`/questions/${id}/tags`, { name: tags })
         navigate(`/questions/${id}`)
+    }
+
+    if (!window.localStorage.getItem('token') && !isAuth) {
+        return <Navigate to='/login' />
     }
 
     return (
@@ -42,8 +49,9 @@ export const AddQuestionPage = () => {
                 </div>
 
 
-                <TextEditor 
-                    editorHeight={300}
+                <TextEditor
+                    minHeightEditor={250} 
+                    maxHeightEditor={400}
                     value={body}
                     onChange={handleBodyChange}
                 />   

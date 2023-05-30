@@ -1,26 +1,161 @@
-.quill.editor-text {
+// .quill.editor-text {
+//     display: flex;
+//     flex-direction: column;
+//     position: relative;
+
+//     .ql-toolbar.ql-snow {
+//         border: 1px solid rgb(64, 64, 64);
+//         border-top-left-radius: 5px;
+//         border-top-right-radius: 5px;
+//         transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+//         button {
+//             height: 27px;
+//             border-radius: 5px;
+//             width: fit-content;
+//             padding: 4px;
+//             margin-right: 5px;
+//         }
+
+//         button:hover {
+//             background-color: rgb(54, 54, 54);
+//         }
+
+//         .ql-stroke {
+//             fill: none !important;
+//             stroke: rgb(214, 214, 214) !important;
+//         }
+        
+//         .ql-fill {
+//             fill: rgb(214, 214, 214) !important;
+//             stroke: none !important;
+//         }
+        
+//         .ql-picker {
+//             color: rgb(214, 214, 214) !important;
+//         }
+
+//         .ql-picker-label {
+//             color: rgb(214, 214, 214) !important;
+//         }
+
+//         .ql-active {
+//             background-color: rgb(54, 54, 54);
+//         }
+
+//     }
+
+//     .ql-toolbar.ql-snow.toolbar-hide {
+//         display: none;
+//     }
+
+//     .ql-container.ql-snow {
+//         border: 1px solid rgb(64, 64, 64);
+//         border-bottom-left-radius: 5px;
+//         border-bottom-right-radius: 5px;
+//         transition: border-top-right-radius 0.3s ease-in-out, border-top-left-radius 0.3s ease-in-out;
+
+//         .ql-editor {
+//             margin-right: 55px;
+//         }
+
+
+//     }
+
+//     .ql-container.ql-snow.container-changeBorder {
+//         border-top-right-radius: 5px;
+//         border-top-left-radius: 5px;
+//     }
+// }
+
+// .ql-editor {
+//     line-height: 25px;
+
+//     pre {
+//         font-size: 13px;
+//         line-height: 18px;
+//         margin-top: 0 !important;
+//     }
+
+//     pre, p:not(:last-child), blockquote  {
+//         margin-bottom: 20px !important;
+//     }
+
+//     p:not(:last-child) {
+//         margin-bottom: 20px;
+//     }
+// }
+
+
+.quill {
     display: flex;
     flex-direction: column;
-    position: relative;
+    
+    .ql-container {
+        font-size: 14px;
+        line-height: 25px;
+        color: rgb(214, 214, 214);
+
+        .ql-editor {
+            *:not(:last-child) {
+                margin-bottom: 20px;
+            }
+
+            pre {
+                font-size: 13px;
+                background-color: #222;
+                color: #f8f8f2;
+                overflow: visible;
+                white-space: pre-wrap;
+                padding: 10px;
+                border-radius: 5px;
+            }
+
+            blockquote {
+                border-left: 4px solid #ccc;
+                padding-left: 16px;
+            }
+        }
+    }
+
+
+    .ql-container.ql-bubble {
+        .ql-tooltip {
+            display: none;
+        }
+
+        .ql-editor {
+            padding: 0;
+
+            img {
+                max-width: 100%;
+            }
+        }
+    }
 
     .ql-toolbar.ql-snow {
         border: 1px solid rgb(64, 64, 64);
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
-        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 
         button {
             height: 27px;
+            border-radius: 5px;
+            width: fit-content;
+            padding: 4px;
+            margin-right: 5px;
+        }
+
+        button:hover {
+            background-color: rgb(54, 54, 54);
         }
 
         .ql-stroke {
-            fill: none !important;
             stroke: rgb(214, 214, 214) !important;
         }
         
         .ql-fill {
             fill: rgb(214, 214, 214) !important;
-            stroke: none !important;
         }
         
         .ql-picker {
@@ -31,23 +166,17 @@
             color: rgb(214, 214, 214) !important;
         }
 
-    }
+        .ql-active {
+            background-color: rgb(54, 54, 54);
+        }
 
-    .ql-toolbar.ql-snow.toolbar-hide {
-        display: none;
+
     }
 
     .ql-container.ql-snow {
         border: 1px solid rgb(64, 64, 64);
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
-
-        transition: border-top-right-radius 0.3s ease-in-out, border-top-left-radius 0.3s ease-in-out;
-    }
-
-    .ql-container.ql-snow.container-changeBorder {
-        border-top-right-radius: 5px;
-        border-top-left-radius: 5px;
     }
 
 

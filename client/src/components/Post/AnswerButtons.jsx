@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchComments } from '../../redux/slices/comment/commentSlice'
 import { checkIsAuth } from '../../redux/slices/auth/authSlice'
@@ -7,13 +7,16 @@ import { BsArrowReturnRight } from 'react-icons/bs'
 
 import styles from './Post.module.scss'
 
-export const AnswerButtons = ({ id, commentsCount , commentsMap, setCommentsMap} ) => {
+export const AnswerButtons = ({ id, commentsCount , commentsMap, setCommentsMap, setReplyVisibleMap} ) => {
     const dispatch = useDispatch()
     const isAuth = useSelector(checkIsAuth)
+    const [fetchCompleted, setFetchCompleted] = useState(false)
+
 
     const handleViewComments = async (data) => {
-        if (!commentsMap?.data) {
+        if (!fetchCompleted) {
             data = await dispatch(fetchComments({ answerId: id }))
+            setFetchCompleted(true)
         } else {
             data = commentsMap?.data
         }
@@ -25,6 +28,13 @@ export const AnswerButtons = ({ id, commentsCount , commentsMap, setCommentsMap}
                 data: data
             }
         })) 
+    }
+
+    const handleTogleReply = () => {
+        setReplyVisibleMap(prevReplyMap => ({
+            ...prevReplyMap,
+            [id]: !prevReplyMap[id]
+        }))
     }
 
     return (
@@ -39,7 +49,8 @@ export const AnswerButtons = ({ id, commentsCount , commentsMap, setCommentsMap}
             )}
 
             {isAuth && (
-                <button 
+                <button
+                    onClick={handleTogleReply} 
                     className={`${styles['btn-simple']} d-flex align-items-center gap-2`}>
                         <BsArrowReturnRight/>Відповісти
                 </button>

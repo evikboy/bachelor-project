@@ -5,16 +5,6 @@ const answerSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    createdAt: {
-        type: Date,
-        required: true,
-        default: Date.now
-    },
-    updatedAt: {
-        type: Date,
-        required: true,
-        default: Date.now
-    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users'
@@ -26,8 +16,20 @@ const answerSchema = new mongoose.Schema({
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'comments'
+    }],
+    upvotes: {
+        type: Number,
+        default: 0
+    },
+    downvotes: {
+        type: Number,
+        default: 0
+    },
+    votes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'votes'
     }]
-})
+}, { timestamps: true })
 
 const Answer = mongoose.model('answers', answerSchema)
 

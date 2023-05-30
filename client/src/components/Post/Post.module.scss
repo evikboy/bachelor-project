@@ -42,6 +42,14 @@
         padding: 0 10px;
     }
 
+    .votedUp {
+        color:#009cff;
+    }
+
+    .votedDown {
+        color: #ff7070;
+    }
+
     .btn-vote.up {
         border-bottom-right-radius: 0;
         border-top-right-radius: 0;
@@ -61,6 +69,7 @@
         color: #009cff;
         height: 30px;
     }
+
 }
 
 .answer {

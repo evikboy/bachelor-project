@@ -1,0 +1,18 @@
+.root {
+    .reply-block {
+        background-color: rgb(39, 39, 39);
+        padding: 25px 30px;
+        margin-bottom: 30px;
+        border-radius: 5px;
+        box-shadow: rgba(0, 0, 0, 0.15) 2px 1px 5px;
+
+        input:hover {
+            outline: rgb(30, 90, 63) solid 0.2em;
+        }
+    }
+
+    .avatar {
+        width: 40px;
+        height: 40px;
+    }
+}

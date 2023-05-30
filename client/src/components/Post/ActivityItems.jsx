@@ -4,7 +4,7 @@ import { HiOutlineEye } from 'react-icons/hi'
 import { FaRegComment }  from 'react-icons/fa'
 import { AiOutlineArrowUp } from 'react-icons/ai'
 
-export const ActivityItems = ({ views, answersCount }) => {
+export const ActivityItems = ({ views, answersCount, votesDif }) => {
     return (
         <ul className='d-flex align-items-center gap-4'>
             <li className='d-flex align-items-center gap-2'>
@@ -14,7 +14,7 @@ export const ActivityItems = ({ views, answersCount }) => {
                 <FaRegComment/>{answersCount}
             </li>
             <li className='d-flex align-items-center gap-2'>
-                <AiOutlineArrowUp/>14
+                <AiOutlineArrowUp/>{votesDif}
             </li>
         </ul>
     )

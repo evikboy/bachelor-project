@@ -19,19 +19,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: 'default-avatar.jpg'
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
-    updatedAt: {
-        type: Date,
-        default: Date.now
-    },
     reputation: {
         type: Number,
         default: 0
     }
-})
+}, { timestamps: true })
 
 userSchema.set('toJSON', { 
     virtuals: true,

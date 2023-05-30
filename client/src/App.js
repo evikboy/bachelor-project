@@ -9,6 +9,7 @@ import { RegisterPage } from './pages/RegisterPage'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
+
 import { useDispatch } from "react-redux"
 import { useEffect } from "react"
 import { getMe } from "./redux/slices/auth/authSlice"
