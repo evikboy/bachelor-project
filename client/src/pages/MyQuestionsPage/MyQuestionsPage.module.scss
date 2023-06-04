@@ -1,0 +1,17 @@
+.root {
+    .firstPost {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    .column {
+        display: flex;
+        flex-direction: column;
+        flex-basis: 800px;
+        margin: auto;
+    }
+
+
+
+
+}

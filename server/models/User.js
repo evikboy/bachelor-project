@@ -22,7 +22,11 @@ const userSchema = new mongoose.Schema({
     reputation: {
         type: Number,
         default: 0
-    }
+    },
+    reputationEvents: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'ReputationEvent'
+    }]
 }, { timestamps: true })
 
 userSchema.set('toJSON', { 

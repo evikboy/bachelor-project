@@ -1,4 +1,5 @@
 import moment from 'moment'
+import 'moment/locale/uk'
 
 const dateFormatter = (date) => {
     const _date = moment(date).locale('uk')

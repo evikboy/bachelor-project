@@ -5,8 +5,10 @@
     border-radius: 5px;
     gap: 15px;
     margin-bottom: 20px;
+    transition: all 0.5s;
+    max-width: 800px;
 
-    h3 {
+    h5 {
         margin-bottom: 0;
     }
 
@@ -79,4 +81,3 @@
 .comment {
     border-left: 10px solid #009cff;
 }
-

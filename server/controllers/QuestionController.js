@@ -2,11 +2,83 @@ const { Question } = require('../models')
 const { errorWrapper, errorGenerator } = require('../errors')
 
 const getAll = errorWrapper(async (req, res) => {
-    const questions = await Question.find().populate('user', 'username avatarUrl').populate('tags')
+    const { filter } = req.query
 
-    if (!questions) errorGenerator(404, 'Questions not found')
+    let sortField
+    if (filter === 'dob_question') {
+        sortField = 'createdAt'
+    } else if (filter === 'byLast_answer') {
+        sortField = 'lastAnswerAt'
+    } else if (filter === 'byNumber_views') {
+        sortField = 'views'
+    } else if (filter === 'byNumber_answers') {
+        sortField = 'answersCount'
+    } else if (filter === 'byNumber_votes') {
+        sortField = { $subtract: ['$upvotes', '$downvotes'] }
+    } else {
+        sortField = 'createdAt'
+    }
+    
+    const questions = await Question.aggregate([
+        {
+            $addFields: {
+                answersCount: { $size: '$answers' },
+            },
+        },
+        {
+            $lookup: {
+                from: 'users',
+                localField: 'user',
+                foreignField: '_id',
+                as: 'user',
+            },
+        },
+        {
+            $unwind: '$user',
+        },
+        {
+            $lookup: {
+                from: 'tags',
+                localField: 'tags',
+                foreignField: '_id',
+                as: 'tags',
+            },
+        },
+        {
+            $lookup: {
+                from: 'answers',
+                localField: 'answers',
+                foreignField: '_id',
+                as: 'answers',
+            },
+        },
+        {
+            $addFields: {
+                lastAnswerAt: { $max: '$answers.createdAt' },
+            },
+        },
+        {
+            $sort: {
+                [sortField]: -1,
+            },
+        },
+        {
+            $project: {
+                'user.password': 0,
+                'user.email': 0,
+                'user.createdAt': 0,
+                'user.updatedAt': 0,
+                'user.reputation': 0,
+                'user.reputationEvents': 0,
+                'votes': 0,
+            }
+        }
+    ])
+    
+    if (!questions) errorGenerator(404, 'Питання не знайдені')
+    
+    res.status(200).json({ questions })
 
-    res.status(200).json({questions})
 })
 
 const getById = errorWrapper(async (req, res) => {
@@ -73,5 +145,5 @@ module.exports = {
     getById,
     create,
     remove,
-    update
+    update,
 }

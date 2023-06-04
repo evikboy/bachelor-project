@@ -1,5 +1,12 @@
 .root {
 
+    .column {
+        display: flex;
+        flex-direction: column;
+        flex-basis: 800px;
+        margin: auto;
+    }
+
     .reply {
         background-color: rgb(39, 39, 39);
         padding: 30px 40px;

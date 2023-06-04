@@ -1,0 +1,40 @@
+.root {
+    .table_post {
+        background-color: rgb(39, 39, 39);
+        border-bottom: 1px solid rgb(64, 64, 64);
+        padding: 16px;
+        border-radius: 5px;
+        box-shadow: rgba(0, 0, 0, 0.15) 2px 1px 5px;
+
+        .typeTarget {
+            background-color: rgb(54, 54, 54);
+            color: #fff;
+            padding: 3px 5px;
+            border-radius: 4px;
+        }
+    }
+
+    .smooth_corner_first {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    .smooth_corner_last {
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+    ul > a:not(:first-child) {
+        margin-left: 20px;
+    }
+
+    ul a {
+        background-color: rgb(54,54,54);
+        padding: 1px 0.7em;
+        font-weight: 500;
+        font-size: 12px;
+        border-radius: 4px;
+        letter-spacing: 0.05em;
+    }
+
+}

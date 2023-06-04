@@ -97,4 +97,60 @@ input, button, textarea {
     outline: rgb(30, 90, 63) solid 0.2em;
 }
 
+.tableSearch {
+    border-bottom: 1px solid rgb(148, 148, 148);
+    border-radius: 0;
+    background-color: transparent;
+}
+
+.tableSearch:focus {
+    outline: 0;
+}
+
+.dropdown-container {
+
+    .dropdown-toggle {
+        background-color: rgb(39, 39, 39);
+        border: none;
+        outline: none;
+        line-height: 36px;
+        min-width: 200px;
+        box-shadow: rgba(0, 0, 0, 0.15) 2px 1px 5px;
+    }
+
+    .dropdown-toggle:focus,
+    .dropdown-toggle:active,
+    .dropdown-toggle:hover {
+        background-color: rgb(39, 39, 39);
+        border: none;
+        outline: rgb(30, 90, 63) solid 0.2em;
+        box-shadow: none;
+    }
+
+    .dropdown-menu {
+        padding: 8px 0;
+        border-radius: 5px;
+        min-width: 200px;
+        margin-top: 10px;
+        box-shadow: rgba(0, 0, 0, 0.15) 2px 1px 5px;
+        background-color: rgb(39, 39, 39);
+    }
+
+    .dropdown-menu a {
+        color: rgb(214, 214, 214);
+        padding: 7px 15px;
+        font-weight: 500;
+    }
+
+    .dropdown-menu a:hover {
+        background: rgb(54, 54, 54);
+    }
+}
+
+
+.post_highlighted {
+    background-color: rgba(34, 142, 93, 0.4) !important;
+    transition: all 0.5s;
+}
+
 

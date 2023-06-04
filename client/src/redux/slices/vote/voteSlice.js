@@ -20,11 +20,38 @@ export const fetchUserVotesForAnswers = createAsyncThunk(
     }
 )
 
+export const fetchUserVotes = createAsyncThunk(
+    'questions/fetchUserVotes',
+    async (_, { rejectWithValue }) => {
+        try {
+            const { data } = await axios.get('/users/votes')
+            return data
+        } catch (err) {
+            return rejectWithValue(err.response.data)
+        }
+
+    }
+)
+
 const voteSlice = createSlice({
     name: 'votes',
     initialState,
     reducers: {},
-    extraReducers: {}
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchUserVotes.pending, (state) => {
+                state.isLoading = true
+                state.error = null
+            })
+            .addCase(fetchUserVotes.fulfilled, (state, action) => {
+                state.votes = action.payload.votes
+                state.isLoading = false
+            })
+            .addCase(fetchUserVotes.rejected, (state, action) => {
+                state.isLoading = false
+                state.error = action.error.message
+            })
+    }
 })
 
 export default voteSlice.reducer

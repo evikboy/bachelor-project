@@ -17,6 +17,10 @@ const answerSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'comments'
     }],
+    commentsCount: {
+        type: Number,
+        default: 0
+    },
     upvotes: {
         type: Number,
         default: 0

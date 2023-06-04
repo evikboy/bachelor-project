@@ -8,11 +8,16 @@ const tagSchema = new mongoose.Schema({
     },
     description: {
         type: String,
+        default: '',
         required: false
     },
     question: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'questions'
+    },
+    questionCount: {
+        type: Number,
+        default: 0
     }
 })
 

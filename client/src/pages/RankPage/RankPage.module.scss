@@ -1,0 +1,110 @@
+.root {
+    .btn-toggle {
+        border-radius: 0;
+    }
+    .period_block {
+        background-color: rgb(34, 142, 93);
+        border-radius: 5px;
+        padding: 35px 30px;
+        box-shadow: rgba(0, 0, 0, 0.15) 2px 1px 5px;
+        // background-image: url('../../../public/images/darts.png');
+        // background-size: 80%;
+        // background-repeat: no-repeat;
+        // background-position: bottom center;
+        // background-position-y: calc(100% + 90px);
+        // background-position-x: right;
+        max-width: 250px;
+    }
+
+    .leader_block {
+        max-width: 250px;
+        flex: 1;
+        background-color: rgb(39, 39, 39);
+        border-radius: 5px;
+        padding: 35px 30px;
+        box-shadow: rgba(0, 0, 0, 0.15) 2px 1px 5px;
+    
+        .leader_avatar {
+            width: 80px;
+            height: 80px;
+        }
+
+        .medal {
+            position: absolute;
+            left: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 27px;
+            height: 27px;
+            color: black;
+            font-weight: bold;
+            border-radius: 50%;
+            font-size: 14px;
+        }
+
+        .gold {
+            background-color: gold;
+        }
+
+        .silver {
+            background-color: silver;
+        }
+
+        .bronze {
+            background-color: #cd7f32;
+        }
+
+        .leader_username {
+            font-weight: 500;
+        }
+    }
+
+
+    .tableSearch {
+        border-bottom: 1px solid rgb(54, 54, 54);
+        border-radius: 0;
+    }
+
+    .table_wrapper {
+        width: 100%;
+    }
+      
+    .table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing:0 15px;
+    }
+      
+    .table td {
+        padding: 30px 10px;
+    }
+      
+    .table th {
+        font-weight: bold;
+        font-size: 12px;
+        letter-spacing: 0.07em;
+        color: rgb(148, 148, 148);
+    }
+      
+    .table tbody tr td {
+        background-color: rgb(39, 39, 39);
+        box-shadow: rgba(0, 0, 0, 0.15) 2px 1px 5px;
+    }
+
+    .table tbody tr {
+        border-radius: 5px !important;
+    }
+
+    .table tr td:first-child {
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+
+    .table tr td:last-child {
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+
+}

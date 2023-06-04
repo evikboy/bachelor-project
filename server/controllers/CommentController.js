@@ -1,4 +1,4 @@
-const { Comment, Answer } = require('../models')
+const { Comment, Answer, User } = require('../models')
 const { errorWrapper, errorGenerator } = require('../errors')
 
 const getByAnswerId = errorWrapper(async (req, res) => {
@@ -22,10 +22,15 @@ const getByAnswerId = errorWrapper(async (req, res) => {
 
 const create = errorWrapper(async (req, res) => {
     const { parentId, parentType } = req.params
-    const { body } = req.body
+    const { body, answerId } = req.body
     const userId = req.user.id
 
+    const user = await User.findById(userId)
+
+    if (user.reputation < 50) errorGenerator({ statusCode: 403, message: 'У вас недостатньо репутації для відправки коментарів' })
+
     let parentEntity
+    let answerEntity
 
     if (parentType === 'answers') {
         parentEntity = await Answer.findById(parentId)
@@ -33,6 +38,12 @@ const create = errorWrapper(async (req, res) => {
         parentEntity = await Comment.findById(parentId)
     } else {
         errorGenerator({ statusCode: 400, message: 'Недійсний parentType' })
+    }
+
+    answerEntity = await Answer.findById(answerId)
+
+    if (!answerEntity) {
+        errorGenerator({ statusCode: 404, message: 'Answer entity не знайдено' })
     }
 
     if (!parentEntity) {
@@ -46,39 +57,16 @@ const create = errorWrapper(async (req, res) => {
         user: userId
     })
 
-    console.log(userId)
-    console.log(comment)
-
     await comment.save()
     await comment.populate('user', 'username avatarUrl')
 
     parentEntity.comments.push(comment._id)
     await parentEntity.save()
 
+    answerEntity.commentsCount += 1
+    await answerEntity.save()
+
     res.status(201).json(comment)
-
-
-    // const { answerId } = req.params
-    // const { body } = req.body
-    // const userId = req.user.id
-
-    // const comment = new Comment({
-    //     body,
-    //     answer: answerId,
-    //     user: userId
-    // })
-    // await comment.save()
-    // await comment.populate('user', 'username avatarUrl')
-
-    // const answer = await Answer.findById(answerId)
-
-    // if (!answer) errorGenerator({ statusCode: 404, message: 'Відповіді не знайдено'})
-
-    // answer.comments.push(comment._id)
-    
-    // await answer.save()
-
-    // res.status(201).json(comment)
 })
 
 module.exports = {

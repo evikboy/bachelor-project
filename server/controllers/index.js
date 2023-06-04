@@ -4,6 +4,7 @@ const CommentController = require('./CommentController')
 const TagController = require('./TagController')
 const VoteController = require('./VoteController')
 const UserController = require('./UserController')
+const ReputationEventController = require('./ReputationEventController')
 
 module.exports = {
     QuestionController,
@@ -11,5 +12,6 @@ module.exports = {
     CommentController,
     TagController,
     VoteController,
-    UserController
+    UserController,
+    ReputationEventController
 }

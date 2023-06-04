@@ -62,20 +62,20 @@ export const Sidebar = () => {
                             to={'/my-questions'} 
                             style={({isActive}) => isActive? activeStyles : undefined} 
                             className='d-flex align-items-baseline gap-4'>
-                                <AiOutlineQuestionCircle size={18}/>Ваші питання
+                                <AiOutlineQuestionCircle size={18}/>Мої питання
                         </NavLink>
 
                         <NavLink 
                             to={'/my-answers'} 
                             style={({isActive}) => isActive? activeStyles : undefined} 
                             className='d-flex align-items-baseline gap-4'>
-                                <FaRegComment size={17}/>Ваші відповіді
+                                <FaRegComment size={17}/>Мої відповіді
                         </NavLink>
 
                         <NavLink 
                             to={'/my-votes'} style={({isActive}) => isActive? activeStyles : undefined} 
                             className='d-flex align-items-baseline gap-4'>
-                                <AiOutlineHeart size={18}/>Ваші голоси
+                                <AiOutlineHeart size={18}/>Мої голоси
                         </NavLink>
                     </>
                 ) : ''

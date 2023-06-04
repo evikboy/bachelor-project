@@ -30,6 +30,31 @@ export const createQuestion = createAsyncThunk(
         }
 })
 
+export const filterQuestions = createAsyncThunk(
+    'questions/filterQuestions',
+    async (filter, { rejectWithValue }) => {
+        try {
+            const { data } = await axios.get(`/questions/?filter=${filter}`)
+            return data
+        } catch (err) {
+            return rejectWithValue(err.response.data)
+        }
+    }
+)
+
+export const fetchUserQuestions = createAsyncThunk(
+    'questions/fetchUserQuestions',
+    async (_, { rejectWithValue }) => {
+        try {
+            const { data } = await axios.get('/users/questions')
+            return data
+        } catch (err) {
+            return rejectWithValue(err.response.data)
+        }
+
+    }
+)
+
 const questionSlice = createSlice({
     name: 'questions',
     initialState,
@@ -57,6 +82,30 @@ const questionSlice = createSlice({
                 state.isLoading = false
             })
             .addCase(createQuestion.rejected, (state, action) => {
+                state.isLoading = false
+                state.error = action.error.message
+            })
+            .addCase(filterQuestions.pending, (state) => {
+                state.isLoading = true
+                state.error = null
+            })
+            .addCase(filterQuestions.fulfilled, (state, action) => {
+                state.questions = action.payload.questions
+                state.isLoading = false
+            })
+            .addCase(filterQuestions.rejected, (state, action) => {
+                state.isLoading = false
+                state.error = action.error.message
+            })
+            .addCase(fetchUserQuestions.pending, (state) => {
+                state.isLoading = true
+                state.error = null
+            })
+            .addCase(fetchUserQuestions.fulfilled, (state, action) => {
+                state.questions = action.payload.questions
+                state.isLoading = false
+            })
+            .addCase(fetchUserQuestions.rejected, (state, action) => {
                 state.isLoading = false
                 state.error = action.error.message
             })

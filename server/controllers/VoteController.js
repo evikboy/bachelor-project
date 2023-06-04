@@ -1,4 +1,4 @@
-const { Vote, Question, Answer } = require('../models')
+const { Vote, Question, Answer, User, ReputationEvent } = require('../models')
 const { errorWrapper, errorGenerator } = require('../errors')
 
 const voteQuestion = errorWrapper(async (req, res) => {
@@ -8,54 +8,82 @@ const voteQuestion = errorWrapper(async (req, res) => {
 
     const question = await Question.findById(questionId)
 
-    if (!question) errorGenerator({ statusCode: 404, message: 'Питання не знайдено'})
+    if (question.user.toString() !== userId ) {
+        let vote
 
-    const existingVote = await Vote.findOne({
-        targetType: 'Question',
-        targetId: questionId,
-        user: userId
-    })
-
-    if (existingVote) {
-
-        if (voteType === 'Upvote') {
-            if (existingVote.voteType === 'Downvote') question.downvotes--
-            question.upvotes++
-        } else if (voteType === 'Downvote') {
-            if (existingVote.voteType === 'Upvote') question.upvotes--
-            question.downvotes++
-        } else if (voteType === 'Novote') {
-            if (existingVote.voteType === 'Upvote') question.upvotes--  
-            else if (existingVote.voteType === 'Downvote') question.downvotes--
+        if (!question) errorGenerator({ statusCode: 404, message: 'Питання не знайдено'})
+    
+        const existingVote = await Vote.findOne({
+            targetType: 'Question',
+            targetId: questionId,
+            user: userId
+        })
+    
+        const author = await User.findById(question.user)
+    
+        if (!author) errorGenerator({ statusCode: 404, message: 'Автор питання не знайдений'})
+    
+        if (existingVote) {
+      
+            if (voteType === 'Upvote') {
+                if (existingVote.voteType === 'Downvote') { question.downvotes--; author.reputation +=2 }
+                question.upvotes++
+                author.reputation +=10
+            } else if (voteType === 'Downvote') {
+                if (existingVote.voteType === 'Upvote') { question.upvotes--; author.reputation -=10 }
+                question.downvotes++
+                author.reputation -=2
+            } else if (voteType === 'Novote') {
+                if (existingVote.voteType === 'Upvote') { question.upvotes--; author.reputation -=10 }  
+                else if (existingVote.voteType === 'Downvote') { question.downvotes--;  author.reputation +=2 }
+            }
+            existingVote.voteType = voteType
+            vote = existingVote
+        
+        } else {
+    
+            if (voteType === 'Upvote') {
+                question.upvotes++
+                author.reputation +=10
+            } else if (voteType === 'Downvote') {
+                question.downvotes++
+                author.reputation -=2
+            }
+    
+            vote = new Vote({
+                targetType: 'Question',
+                targetId: questionId,
+                voteType: voteType,
+                user: userId
+            })
+            question.votes.push(vote)
         }
-
-        existingVote.voteType = voteType
-        await existingVote.save()
-
-        await question.save()
-
-        return res.status(200).json(existingVote)
+    
+        vote.save()
+        question.save()
+        author.save()
+    
+        await ReputationEvent.findOneAndUpdate(
+            {
+                voter: userId,
+                relatedQuestion: question._id,
+                userId: question.user,
+                reason: 'Voting for question'  
+            },
+            {
+                $set: {
+                    reputation: voteType === 'Upvote' ? 10 : (voteType === 'Novote' ? 0 : -2)
+                }
+            },
+            { upsert: true }
+        )
+    
+    
+        res.status(200).json(vote)
+    } else {
+        errorGenerator({ statusCode: 403, message: 'Ви не можете голосувати за своє питання'})
     }
 
-    const vote = new Vote({
-        targetType: 'Question',
-        targetId: questionId,
-        voteType: voteType,
-        user: userId
-    })
-    await vote.save()
-
-    if (voteType === 'Upvote') {
-        question.upvotes++
-    } else if (voteType === 'Downvote') {
-        question.downvotes++
-    }
-
-    question.votes.push(vote)
-
-    await question.save()
-
-    res.status(200).json(vote)
 })
 
 const voteAnswer = errorWrapper(async (req, res) => {
@@ -65,54 +93,81 @@ const voteAnswer = errorWrapper(async (req, res) => {
 
     const answer = await Answer.findById(answerId)
 
-    if (!answer) errorGenerator({ statusCode: 404, message: 'Питання не знайдено'})
+    if (answer.user.toString() !== userId ) {
+        let vote
 
-    const existingVote = await Vote.findOne({
-        targetType: 'Answer',
-        targetId: answerId,
-        user: userId
-    })
-
-    if (existingVote) {
-
-        if (voteType === 'Upvote') {
-            if (existingVote.voteType === 'Downvote') answer.downvotes--
-            answer.upvotes++
-        } else if (voteType === 'Downvote') {
-            if (existingVote.voteType === 'Upvote') answer.upvotes--
-            answer.downvotes++
-        } else if (voteType === 'Novote') {
-            if (existingVote.voteType === 'Upvote') answer.upvotes--  
-            else if (existingVote.voteType === 'Downvote') answer.downvotes--
+        if (!answer) errorGenerator({ statusCode: 404, message: 'Відповіді не знайдено'})
+    
+        const existingVote = await Vote.findOne({
+            targetType: 'Answer',
+            targetId: answerId,
+            user: userId
+        })
+    
+        const author = await User.findById(answer.user)
+    
+        if (!author) errorGenerator({ statusCode: 404, message: 'Автор відповіді не знайдений'})
+    
+        if (existingVote) {
+      
+            if (voteType === 'Upvote') {
+                if (existingVote.voteType === 'Downvote') { answer.downvotes--; author.reputation +=2 }
+                answer.upvotes++
+                author.reputation +=10
+            } else if (voteType === 'Downvote') {
+                if (existingVote.voteType === 'Upvote') { answer.upvotes--; author.reputation -=10 }
+                answer.downvotes++
+                author.reputation -=2
+            } else if (voteType === 'Novote') {
+                if (existingVote.voteType === 'Upvote') { answer.upvotes--; author.reputation -=10 }  
+                else if (existingVote.voteType === 'Downvote') { answer.downvotes--;  author.reputation +=2 }
+            }
+            existingVote.voteType = voteType
+            vote = existingVote
+        
+        } else {
+    
+            if (voteType === 'Upvote') {
+                answer.upvotes++
+                author.reputation +=10
+            } else if (voteType === 'Downvote') {
+                answer.downvotes++
+                author.reputation -=2
+            }
+    
+            vote = new Vote({
+                targetType: 'Answer',
+                targetId: answerId,
+                voteType: voteType,
+                user: userId
+            })
+            answer.votes.push(vote)
         }
-
-        existingVote.voteType = voteType
-        await existingVote.save()
-
-        await answer.save()
-
-        return res.status(200).json(existingVote)
+    
+        vote.save()
+        answer.save()
+        author.save()
+    
+        await ReputationEvent.findOneAndUpdate(
+            {
+                voter: userId,
+                relatedQuestion: answer._id,
+                userId: answer.user,
+                reason: 'Voting for answer'  
+            },
+            {
+                $set: {
+                    reputation: voteType === 'Upvote' ? 10 : (voteType === 'Novote' ? 0 : -2)
+                }
+            },
+            { upsert: true }
+        )
+    
+    
+        res.status(200).json(vote)
+    } else {
+        errorGenerator({ statusCode: 403, message: 'Ви не можете голосувати за свою відповідь'})
     }
-
-    const vote = new Vote({
-        targetType: 'Answer',
-        targetId: answerId,
-        voteType: voteType,
-        user: userId
-    })
-    await vote.save()
-
-    if (voteType === 'Upvote') {
-        answer.upvotes++
-    } else if (voteType === 'Downvote') {
-        answer.downvotes++
-    }
-
-    answer.votes.push(vote)
-
-    await answer.save()
-
-    res.status(200).json(vote)
 })
 
 const getUserVoteForQuestion = async (req, res) => {

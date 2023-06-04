@@ -31,6 +31,20 @@ export const createAnswer = createAsyncThunk(
     }
 )
 
+export const fetchUserAnswers = createAsyncThunk(
+    'questions/fetchUserAnswers',
+    async (_, { rejectWithValue }) => {
+        try {
+            const { data } = await axios.get('/users/answers')
+            return data
+        } catch (err) {
+            return rejectWithValue(err.response.data)
+        }
+
+    }
+)
+
+
 const answerSlice = createSlice({
     name: 'answers',
     initialState,
@@ -47,7 +61,7 @@ const answerSlice = createSlice({
             })
             .addCase(fetchAnswers.rejected, (state, action) => {
                 state.isLoading = false
-                state.error = action.payload.message
+                state.error = action.payload?.message
             })
             .addCase(createAnswer.pending, (state) => {
                 state.isLoading = true
@@ -59,7 +73,19 @@ const answerSlice = createSlice({
             })
             .addCase(createAnswer.rejected, (state, action) => {
                 state.isLoading = false
-                state.error = action.payload.message
+                state.error = action.payload?.message
+            })
+            .addCase(fetchUserAnswers.pending, (state) => {
+                state.isLoading = true
+                state.error = null
+            })
+            .addCase(fetchUserAnswers.fulfilled, (state, action) => {
+                state.answers = action.payload.answers
+                state.isLoading = false
+            })
+            .addCase(fetchUserAnswers.rejected, (state, action) => {
+                state.isLoading = false
+                state.error = action.error.message
             })
     }
 })

@@ -1,6 +1,14 @@
 const { Tag, Question } = require('../models')
 const { errorWrapper, errorGenerator } = require('../errors')
 
+const getAll = errorWrapper(async (req, res) => {
+    const tags = await Tag.find()
+
+    if (!tags) errorGenerator({ statusCode: 404, message: 'Теги не знайдено'})
+
+    res.status(200).json(tags)
+})
+
 const getByQuestionId = errorWrapper(async (req, res) => {
     const { questionId } = req.params
 
@@ -24,11 +32,20 @@ const create = errorWrapper(async (req, res) => {
     const createdTags = []
 
     for (const tagName of tags) {
-        const tag = new Tag({
-            name: tagName,
-            question: questionId
-        })
-        await tag.save()
+        let tag = await Tag.findOne({ name: tagName })
+
+        if (!tag) {
+            tag = new Tag({
+                name: tagName,
+                question: questionId,
+                questionCount: 1
+            })
+            await tag.save()
+        } else {
+            tag.questionCount++
+            await tag.save()
+        }
+
         createdTags.push(tag._id)
     }
 
@@ -39,6 +56,7 @@ const create = errorWrapper(async (req, res) => {
 })
 
 module.exports = {
+    getAll,
     getByQuestionId,
     create
 }

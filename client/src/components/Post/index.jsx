@@ -28,12 +28,12 @@ export const Post = ({
     voteType,
     answersCount,
     commentsCount,
-    answerUserName,
     commentsMap, setCommentsMap,
-    setReplyVisibleMap
+    setReplyVisibleMap,
+    showToast
 }) => {
     return (
-        <div className={`${styles.root} ${isAnswer ? styles.answer : ''} ${isComment ? styles.comment : ''} d-flex flex-column mw-100`}>
+        <div className={`${styles.root} ${isAnswer ? styles.answer : ''} ${isComment ? styles.comment : ''} d-flex flex-column mw-100`} id={id}>
             
             {(isQuestionListItem || isQuestion || isAnswer) && (
                 <div className='post__head d-flex align-items-center'>
@@ -49,7 +49,7 @@ export const Post = ({
                 )}
                     {isComment && (
                         <>
-                            <Link><span style={{ fontWeight: '500'}}>@{answerUserName}</span></Link>&nbsp;{body}
+                            {body}
                         </>
                     )}
 
@@ -67,9 +67,9 @@ export const Post = ({
 
             <div className='post__footer d-flex justify-content-between align-items-center'>
                 {isQuestionListItem && ( <> <TagList tags={tags} /> <ActivityItems views={views} answersCount={answersCount} votesDif={upvotes - downvotes}/> </> )}
-                {isQuestion && ( <> <TagList tags={tags} /> <VoteButtons isQuestion voteType={voteType} targetId={id} targetType={'Question'} votesDif={upvotes - downvotes} /> </> )}
-                {isAnswer && ( <> <VoteButtons voteType={voteType} targetId={id} targetType={'Answer'} votesDif={upvotes - downvotes} /> <AnswerButtons id={id} commentsCount={commentsCount} commentsMap={commentsMap} setCommentsMap={setCommentsMap} setReplyVisibleMap={setReplyVisibleMap} /> </> )}
-                {isComment && ( <> <div>від <Link style={{ color: '#009cff' }} >{user.username}</Link> <span style={{ color: 'rgb(148, 148, 148)'}}>{dateFormatter(createdAt).toLocaleLowerCase()}</span></div> <CommentButtons id={id} setReplyVisibleMap={setReplyVisibleMap}/> </> )}
+                {isQuestion && ( <> <TagList tags={tags} /> <VoteButtons isQuestion voteType={voteType} targetId={id} targetType={'Question'} votesDif={upvotes - downvotes} showToast={showToast} /> </> )}
+                {isAnswer && ( <> <VoteButtons voteType={voteType} targetId={id} targetType={'Answer'} votesDif={upvotes - downvotes} showToast={showToast}/> <AnswerButtons id={id} commentsCount={commentsCount} commentsMap={commentsMap} setCommentsMap={setCommentsMap} setReplyVisibleMap={setReplyVisibleMap} showToast={showToast}/> </> )}
+                {isComment && ( <> <div>від <Link style={{ color: '#009cff' }} >{user.username}</Link> <span style={{ color: 'rgb(148, 148, 148)'}}>{dateFormatter(createdAt).toLocaleLowerCase()}</span></div> <CommentButtons id={id} setReplyVisibleMap={setReplyVisibleMap} showToast={showToast}/> </> )}
             </div>
         </div>
     )

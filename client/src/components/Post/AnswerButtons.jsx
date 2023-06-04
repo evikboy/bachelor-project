@@ -7,11 +7,11 @@ import { BsArrowReturnRight } from 'react-icons/bs'
 
 import styles from './Post.module.scss'
 
-export const AnswerButtons = ({ id, commentsCount , commentsMap, setCommentsMap, setReplyVisibleMap} ) => {
+export const AnswerButtons = ({ id, commentsCount , commentsMap, setCommentsMap, setReplyVisibleMap, showToast } ) => {
     const dispatch = useDispatch()
     const isAuth = useSelector(checkIsAuth)
     const [fetchCompleted, setFetchCompleted] = useState(false)
-
+    const reputation = useSelector((state) => state.auth.user?.reputation)
 
     const handleViewComments = async (data) => {
         if (!fetchCompleted) {
@@ -31,6 +31,11 @@ export const AnswerButtons = ({ id, commentsCount , commentsMap, setCommentsMap,
     }
 
     const handleTogleReply = () => {
+        if (reputation < 50) {
+            showToast('Ви повинні мати 50 репутації, щоб коментувати', 'info')
+            return
+        }
+        
         setReplyVisibleMap(prevReplyMap => ({
             ...prevReplyMap,
             [id]: !prevReplyMap[id]

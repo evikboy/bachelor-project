@@ -2,7 +2,7 @@ const conf = require('../config')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { secret, expiresIn } = conf.jwt
-const { User } = require('../models')
+const { User, Question, Answer, Vote } = require('../models')
 const { errorWrapper, errorGenerator } = require('../errors')
 
 const login = errorWrapper(async (req, res) => {
@@ -76,8 +76,100 @@ const getMe = errorWrapper(async (req, res) => {
     })
 })
 
+const getUserQuestions = errorWrapper(async (req, res) => {
+    const userId = req.user.id
+
+    const questions = await Question.find({ user: userId })
+        .populate('user', 'username avatarUrl')
+        .populate('tags')
+    .sort({ createdAt: -1 })
+    
+    if (!questions) errorGenerator({ statusCode: 404, message: 'Питання не знайдені'})
+
+    res.status(200).json({ questions })
+})
+
+const getUserAnswers = errorWrapper(async (req, res) => {
+    const userId = req.user.id
+
+    const answers = await Answer.find({ user: userId })
+        .populate('question', 'title tags')
+        .populate({
+            path: 'question',
+            select: 'title',
+            populate: {
+                path: 'tags',
+                select: 'name',
+            }
+        })
+    .sort({ createdAt: -1 })
+
+    if (!answers) errorGenerator({ statusCode: 404, message: 'Відповіді не знайдені'})
+
+    res.status(200).json({ answers })
+})
+
+const getUserVotes = errorWrapper(async (req, res) => {
+    const userId = req.user.id
+
+    const votes = await Vote.find({ user: userId, voteType: { $ne: 'Novote' } })
+    .sort({ updatedAt: -1 })
+
+    if (!votes) errorGenerator({ statusCode: 404, message: 'Голоси не знайдені'})
+  
+    const formattedVotes = await Promise.all(
+        votes.map(async (vote) => {
+            const formattedVote = {
+                targetType: vote.targetType,
+                voteType: vote.voteType,
+                user: vote.user,
+                createdAt: vote.updatedAt,
+            }
+  
+            if (vote.targetType === 'Question') {
+                const question = await Question.findById(vote.targetId).populate('tags', 'name')
+                if (question) {
+                    formattedVote.target = {
+                        _id: question._id,
+                        questionTitle: question.title,
+                        questionId: question._id,
+                        tags: question.tags,
+                        user: question.user,
+                    }
+                }
+            } else if (vote.targetType === 'Answer') {
+                const answer = await Answer.findById(vote.targetId)
+                    .populate({
+                        path: 'question',
+                        select: 'title',
+                        populate: {
+                            path: 'tags',
+                            select: 'name',
+                    },
+                })
+                if (answer) {
+                    formattedVote.target = {
+                        _id: answer._id,
+                        user: answer.user,
+                        questionTitle: answer.question.title,
+                        questionId: answer.question._id,
+                        tags: answer.question.tags
+                    }
+                }
+            }
+  
+            return formattedVote
+        })
+    )
+
+    res.status(200).json({ votes: formattedVotes })
+})
+
 module.exports = {
     login,
     register,
-    getMe
+    getMe,
+    getUserQuestions,
+    getUserAnswers,
+    getUserVotes
 }

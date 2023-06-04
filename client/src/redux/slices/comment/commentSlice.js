@@ -21,9 +21,9 @@ export const fetchComments = createAsyncThunk(
 
 export const createComment = createAsyncThunk(
     'comments/createComment', 
-    async ({ parentId, parentType, body }, { rejectWithValue }) => {
+    async ({ parentId, parentType, answerId, body }, { rejectWithValue }) => {
         try {
-            const { data } = await axios.post(`/${parentType}s/${parentId}/comments`, { body })
+            const { data } = await axios.post(`/${parentType}s/${parentId}/comments`, { body, answerId })
             return data
         } catch (err) {
             return rejectWithValue(err.response.data)
@@ -47,7 +47,7 @@ const commentSlice = createSlice({
             })
             .addCase(fetchComments.rejected, (state, action) => {
                 state.isLoading = false
-                state.error = action.payload.message
+                state.error = action.payload?.message
             })
     }
 })

@@ -5,6 +5,7 @@ import answerSlice from './slices/answer/answerSlice'
 import tagSlice from './slices/tag/tagSlice'
 import voteSlice from './slices/vote/voteSlice'
 import commentSlice from './slices/comment/commentSlice'
+import reputationEventSlice from './slices/reputationEvent/reputationEventSlice'
 
 export const store = configureStore({
     reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
         answer: answerSlice,
         comment: commentSlice,
         tag: tagSlice,
-        vote: voteSlice
+        vote: voteSlice,
+        reputationEvent: reputationEventSlice
     }
 })

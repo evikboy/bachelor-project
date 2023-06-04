@@ -44,7 +44,6 @@ export const AddQuestionPage = () => {
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                     >
-
                     </input>
                 </div>
 
@@ -67,7 +66,6 @@ export const AddQuestionPage = () => {
                         value={tags}
                         onChange={(e) => setTags(e.target.value)}
                     >
-
                     </input>
                 </div>
 

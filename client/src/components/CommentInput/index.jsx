@@ -5,7 +5,7 @@ import TextareaAutosize from 'react-textarea-autosize'
 import { createComment } from '../../redux/slices/comment/commentSlice'
 import styles from './CommentInput.module.scss'
 
-export const CommentInput = ({ answerId, parentId, parentType, setCommentsMap, setReplyVisibleMap }) => {
+export const CommentInput = ({ answerId, parentId, parentType, commentsMap, setCommentsMap, setReplyVisibleMap }) => {
     const dispatch = useDispatch()
 
     const [commentInput, setCommentInput] = useState({})
@@ -18,7 +18,40 @@ export const CommentInput = ({ answerId, parentId, parentType, setCommentsMap, s
     }
 
     const submitComment = async ({ answerId, parentId, parentType }) => {
-        const response = await dispatch(createComment({ parentId, parentType, body: commentInput[parentId]}))
+        let replyUser = null
+
+        if (parentType !== 'answer') replyUser = commentsMap[answerId]?.data.payload.find(comment => comment._id === parentId)?.user
+
+        const replyUsername = replyUser ? `@${replyUser.username} ` : ''
+
+        const response = await dispatch(createComment({ 
+            parentId, 
+            parentType,
+            answerId, 
+            body: `${replyUsername}${commentInput[parentId]}`
+        }))
+
+        const findOldestParent = (commentId) => {
+            const currentComment = commentsMap[answerId]?.data.payload.filter(comment => comment._id === commentId)[0];
+            if (!currentComment || !currentComment.parentId || currentComment.parentType === 'answers') {
+              return commentId;
+            }
+            return findOldestParent(currentComment.parentId);
+        };
+        console.log(findOldestParent(parentId))
+
+        const oldestComm = commentsMap[answerId]?.data.payload.filter(comment => comment._id === findOldestParent(parentId))[0];
+        let canBeShown = false;
+
+        if (parentType === 'answer' || (oldestComm && oldestComm.isNewComment)) {
+          canBeShown = true;
+        }
+
+        console.log(canBeShown)
+
+
+
+
 
         setCommentsMap(prevCommentsMap => ({
             ...prevCommentsMap,
@@ -30,7 +63,8 @@ export const CommentInput = ({ answerId, parentId, parentType, setCommentsMap, s
                         ...(prevCommentsMap[answerId]?.data.payload || []),
                         {
                             ...response.payload,
-                            isNewComment: true
+                            isNewComment: true,
+                            canBeShown: canBeShown
                         }
                     ],
                 }
